@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  web:
+    image: django:latest
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - DATABASE_URL=postgres://postgres:password@db:5432/dbname
+
+  db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=dbname
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+
+  redis:
+    image: redis:latest
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A your_project_name worker --loglevel=info
+    volumes:
+      - .:/app
+    environment:
+      - DATABASE_URL=postgres://postgres:password@db:5432/dbname
+
+volumes:
+  postgres_data:
