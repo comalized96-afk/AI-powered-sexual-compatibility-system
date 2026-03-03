@@ -1,0 +1,16 @@
+Django
+Django REST framework
+psycopg2-binary
+pgvector
+cryptography
+sentence-transformers
+numpy
+scikit-learn
+gunicorn
+python-dotenv
+celery
+redis
+better-profanity
+django-ratelimit
+prometheus-client
+sentry-sdk
